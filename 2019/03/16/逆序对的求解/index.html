@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="逆序对,">
 
 
 
@@ -79,19 +79,20 @@
 
 
 
-<meta name="description" content="#逆序对的求解问题 今天在做课程设计作业时，发现需要求解逆序对的问题，对逆序对求解的算法印象比较模糊了，所以复习了一下。 ##逆序对问题 逆序对：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。 输入一个数组,求出这个数组中的逆序对的总数： 如数组{7,5,6,4}，逆序对总共有5对，{7,5}，{7,6}，{7,4}，{5,4}，{6,4}； ###思路1：暴力解">
+<meta name="description" content="逆序对的求解问题今天在做课程设计作业时，发现需要求解逆序对的问题，对逆序对求解的算法印象比较模糊了，所以复习了一下。 逆序对问题逆序对：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。 输入一个数组,求出这个数组中的逆序对的总数： 如数组{7,5,6,4}，逆序对总共有5对，{7,5}，{7,6}，{7,4}，{5,4}，{6,4}；">
+<meta name="keywords" content="逆序对">
 <meta property="og:type" content="article">
 <meta property="og:title" content="逆序对的求解">
 <meta property="og:url" content="http://yoursite.com/2019/03/16/逆序对的求解/index.html">
 <meta property="og:site_name" content="Essays">
-<meta property="og:description" content="#逆序对的求解问题 今天在做课程设计作业时，发现需要求解逆序对的问题，对逆序对求解的算法印象比较模糊了，所以复习了一下。 ##逆序对问题 逆序对：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。 输入一个数组,求出这个数组中的逆序对的总数： 如数组{7,5,6,4}，逆序对总共有5对，{7,5}，{7,6}，{7,4}，{5,4}，{6,4}； ###思路1：暴力解">
+<meta property="og:description" content="逆序对的求解问题今天在做课程设计作业时，发现需要求解逆序对的问题，对逆序对求解的算法印象比较模糊了，所以复习了一下。 逆序对问题逆序对：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。 输入一个数组,求出这个数组中的逆序对的总数： 如数组{7,5,6,4}，逆序对总共有5对，{7,5}，{7,6}，{7,4}，{5,4}，{6,4}；">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://images2015.cnblogs.com/blog/755284/201609/755284-20160922151336746-1513797434.png">
-<meta property="og:updated_time" content="2019-03-16T14:45:08.672Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/16/逆序对的求解/分治.png">
+<meta property="og:updated_time" content="2019-03-16T15:48:04.183Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逆序对的求解">
-<meta name="twitter:description" content="#逆序对的求解问题 今天在做课程设计作业时，发现需要求解逆序对的问题，对逆序对求解的算法印象比较模糊了，所以复习了一下。 ##逆序对问题 逆序对：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。 输入一个数组,求出这个数组中的逆序对的总数： 如数组{7,5,6,4}，逆序对总共有5对，{7,5}，{7,6}，{7,4}，{5,4}，{6,4}； ###思路1：暴力解">
-<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/755284/201609/755284-20160922151336746-1513797434.png">
+<meta name="twitter:description" content="逆序对的求解问题今天在做课程设计作业时，发现需要求解逆序对的问题，对逆序对求解的算法印象比较模糊了，所以复习了一下。 逆序对问题逆序对：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。 输入一个数组,求出这个数组中的逆序对的总数： 如数组{7,5,6,4}，逆序对总共有5对，{7,5}，{7,6}，{7,4}，{5,4}，{6,4}；">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/16/逆序对的求解/分治.png">
 
 
 
@@ -202,16 +203,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-schedule">
-          <a href="/schedule/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
-            
-            日程表
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
@@ -304,6 +295,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -362,15 +375,14 @@
       
 
       
-        <p>#逆序对的求解问题</p>
-<p>今天在做课程设计作业时，发现需要求解逆序对的问题，对逆序对求解的算法印象比较模糊了，所以复习了一下。</p>
-<p>##逆序对问题</p>
-<p>逆序对：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。</p>
+        <h3 id="逆序对的求解问题"><a href="#逆序对的求解问题" class="headerlink" title="逆序对的求解问题"></a>逆序对的求解问题</h3><p>今天在做课程设计作业时，发现需要求解逆序对的问题，对逆序对求解的算法印象比较模糊了，所以复习了一下。</p>
+<h4 id="逆序对问题"><a href="#逆序对问题" class="headerlink" title="逆序对问题"></a>逆序对问题</h4><p>逆序对：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。</p>
 <p>输入一个数组,求出这个数组中的逆序对的总数：</p>
 <p>如数组{7,5,6,4}，逆序对总共有5对，{7,5}，{7,6}，{7,4}，{5,4}，{6,4}；</p>
-<p>###思路1：暴力解法，顺序扫描整个数组，每扫描到一个数字的时候，逐个比较该数字和它后面的数字的大小。如果后面的数字比它小，则这两个数字就组成一个逆序对。假设数组中含有n个数字，由于每个数字都要和O(n)个数字作比较，因此这个算法的时间复杂度是O(n2)。</p>
-<p>###思路2：分治思想，采用归并排序的思路来处理，如下图，先分后治：</p>
-<p><img src="https://images2015.cnblogs.com/blog/755284/201609/755284-20160922151336746-1513797434.png" alt="分治思想"></p>
+<a id="more"></a>
+<p><strong>思路1：暴力解法，顺序扫描整个数组，每扫描到一个数字的时候，逐个比较该数字和它后面的数字的大小。如果后面的数字比它小，则这两个数字就组成一个逆序对。假设数组中含有n个数字，由于每个数字都要和O(n)个数字作比较，因此这个算法的时间复杂度是O(n2)。</strong></p>
+<p><strong>思路2：分治思想，采用归并排序的思路来处理，如下图，先分后治：</strong></p>
+<p><img src="/2019/03/16/逆序对的求解/分治.png" alt="分治思想"></p>
 <p>先把数组分解成两个长度为2的子数组，再把这两个子数组分解成两个长度为1的子数组。接下来一边合并相邻的子数组，一边统计逆序对的数目。在第一对长度为1的子数组{7}、{5}中7&gt;5，因此（7,5）组成一个逆序对。同样在第二对长度为1的子数组{6}，{4}中也有逆序对（6,4），由于已经统计了这两对子数组内部的逆序对，因此需要把这两对子数组进行排序，避免在之后的统计过程中重复统计。</p>
 <p><strong>逆序对的总数=左边数组中的逆序对的数量+右边数组中逆序对的数量+左右结合成新的顺序数组时中出现的逆序对的数量；</strong></p>
 <p>总结统计数组逆序对的过程：先把数组分隔成子数组，先统计出子数组内部的逆序对的数目，然后再统计出两个相邻子数组之间的逆序对的数目。在统计逆序对的过程中，还需要对数组进行排序，其实这个排序过程就是归并排序的思路。</p>
@@ -392,6 +404,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/逆序对/" rel="tag"><i class="fa fa-tag"></i> 逆序对</a>
+          
+        </div>
       
 
       
@@ -462,8 +480,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -485,7 +512,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -505,6 +550,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#逆序对的求解问题"><span class="nav-number">1.</span> <span class="nav-text">逆序对的求解问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#逆序对问题"><span class="nav-number">1.1.</span> <span class="nav-text">逆序对问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
