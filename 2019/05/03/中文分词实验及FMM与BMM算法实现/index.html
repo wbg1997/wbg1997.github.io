@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Unicode,中文字符,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="此为在课上做的一个实验，涉及内容较多故做如下记录。 主要分为三部分：实现中文分词、实现FMM算法、实现BMM算法">
+<meta name="keywords" content="Unicode,中文字符">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中文分词实验及FMM与BMM算法实现">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/中文分词实验及FMM与BMM算法实现/index.html">
+<meta property="og:site_name" content="Essays">
+<meta property="og:description" content="此为在课上做的一个实验，涉及内容较多故做如下记录。 主要分为三部分：实现中文分词、实现FMM算法、实现BMM算法">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-17T03:39:30.570Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="中文分词实验及FMM与BMM算法实现">
+<meta name="twitter:description" content="此为在课上做的一个实验，涉及内容较多故做如下记录。 主要分为三部分：实现中文分词、实现FMM算法、实现BMM算法">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/03/中文分词实验及FMM与BMM算法实现/">
+
+
+
+
+
+  <title>中文分词实验及FMM与BMM算法实现 | Essays</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Essays</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/中文分词实验及FMM与BMM算法实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wbg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Essays">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">中文分词实验及FMM与BMM算法实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-03T00:00:00+08:00">
+                2019-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数字内容安全/" itemprop="url" rel="index">
+                    <span itemprop="name">数字内容安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>此为在课上做的一个实验，涉及内容较多故做如下记录。</p>
+<p>主要分为三部分：实现中文分词、实现FMM算法、实现BMM算法</p>
+<a id="more"></a>
+<h4 id="中文分词"><a href="#中文分词" class="headerlink" title="中文分词"></a>中文分词</h4><h5 id="基本要求"><a href="#基本要求" class="headerlink" title="基本要求"></a>基本要求</h5><p>给定语料库，从中识别中文分词并统计词频。</p>
+<p>语料库示例：</p>
+<p>19980101-01-001-001/m  迈向/v  充满/v  希望/n  的/u  新/a  世纪/n  ——/w  一九九八年/t  新年/t  讲话/n  （/w  附/v  图片/n  １/m  张/q  ）/w  </p>
+<p>19980101-01-001-006/m  在/p  １９９８年/t  来临/v  之际/f  ，/w  我/r  十分/m  高兴/a  地/u  通过/p  [中央/n  人民/n  广播/vn  电台/n]nt  、/w  [中国/ns  国际/n  广播/vn  电台/n]nt  和/c  [中央/n  电视台/n]nt  ，/w  向/p  全国/n  各族/r  人民/n  ，/w  向/p  [香港/ns  特别/a  行政区/n]ns  同胞/n  、/w  澳门/ns  和/c  台湾/ns  同胞/n  、/w  海外/s  侨胞/n  ，/w  向/p  世界/n  各国/r  的/u  朋友/n  们/k  ，/w  致以/v  诚挚/a  的/u  问候/vn  和/c  良好/a  的/u  祝愿/vn  ！/w  </p>
+<p>结果示例：</p>
+<p>民心所向:1<br>实劲:1<br>音乐声:1</p>
+<p>……</p>
+<p>。:35983<br>的:54487<br>，:74921</p>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">addtodic</span><span class="params">(dic,s)</span>:</span></span><br><span class="line">	<span class="keyword">if</span> dic. __contains__(s):</span><br><span class="line">		dic[s] += <span class="number">1</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		dic[s] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(dic,data)</span>:</span></span><br><span class="line">    <span class="comment">#识别普通分词</span></span><br><span class="line">	pattern1 = <span class="string">u'[\u0080-\uFFFD0-9\-]+'</span></span><br><span class="line">	p = re.compile(pattern1)</span><br><span class="line">	l = p.findall(data)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> l:</span><br><span class="line">        <span class="comment">#去掉时间</span></span><br><span class="line">		<span class="keyword">if</span> re.match(<span class="string">r"[0-9]+-[0-9]+-"</span>,i):</span><br><span class="line">			<span class="keyword">pass</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			addtodic(dic,i)</span><br><span class="line">	</span><br><span class="line">	<span class="comment">#识别形如[.*]的分词</span></span><br><span class="line">	l = []</span><br><span class="line">	temp = []</span><br><span class="line">	pattern2 = <span class="string">u'\[[\u0080-\uFFFD\u0020/0-9\w]+\]?'</span></span><br><span class="line">	p = re.compile(pattern2)</span><br><span class="line">	l = p.findall(data)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> l:</span><br><span class="line">		temp = re.compile(pattern1).findall(i)</span><br><span class="line">		s = <span class="string">""</span>.join(i <span class="keyword">for</span> i <span class="keyword">in</span> temp)</span><br><span class="line">		addtodic(dic,s)</span><br><span class="line"></span><br><span class="line">			</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	file = open(<span class="string">"./ylk.txt"</span>,<span class="string">'r'</span>,encoding = <span class="string">"utf-8"</span>)</span><br><span class="line">	data = file.read()</span><br><span class="line">	data = data[<span class="number">3</span>:]</span><br><span class="line">	dic = &#123;&#125;</span><br><span class="line">	create(dic,data)</span><br><span class="line">	l = sorted(dic.items(),key = <span class="keyword">lambda</span> item:item[<span class="number">1</span>])</span><br><span class="line">	outfile = open(<span class="string">'./dic.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">	print(len(l))</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> l:</span><br><span class="line">		s = <span class="string">""</span>+i[<span class="number">0</span>]+<span class="string">":"</span>+str(i[<span class="number">1</span>])+<span class="string">"\n"</span></span><br><span class="line">		outfile.write(s)</span><br><span class="line">		print(s)</span><br><span class="line">		<span class="comment">#break</span></span><br><span class="line">	outfile.close()</span><br></pre></td></tr></table></figure>
+<h5 id="补充：Unicode中文编码范围："><a href="#补充：Unicode中文编码范围：" class="headerlink" title="补充：Unicode中文编码范围："></a>补充：Unicode中文编码范围：</h5><p>2E80～33FFh：中日韩符号区。收容康熙字典部首、中日韩辅助部首、注音符号、日本假名、韩文音符，中日韩的符号、标点、带圈或带括符文数字、月份，以及日本的假名组合、单位、年号、月份、日期、时间等。<br>3400～4DFFh：中日韩认同表意文字扩充A区，总计收容6,582个中日韩汉字。<br>4E00～9FFFh：中日韩认同表意文字区，总计收容20,902个中日韩汉字。<br>A000～A4FFh：彝族文字区，收容中国南方彝族文字和字根。<br>AC00～D7FFh：韩文拼音组合字区，收容以韩文音符拼成的文字。<br>F900～FAFFh：中日韩兼容表意文字区，总计收容302个中日韩汉字。<br>FB00～FFFDh：文字表现形式区，收容组合拉丁文字、希伯来文、阿拉伯文、中日韩直式标点、小符号、半角符号、全角符号等。</p>
+<h4 id="FMM算法实现"><a href="#FMM算法实现" class="headerlink" title="FMM算法实现"></a>FMM算法实现</h4><h5 id="FMM简介"><a href="#FMM简介" class="headerlink" title="FMM简介"></a>FMM简介</h5><p>FMM即正向最大匹配分词，即每次向后读取maxWordLength个字，如若匹配则继续，否则回退一个字继续匹配，直至单字无法匹配，将其单独分词。经统计，示例单词本中的maxWordLength为32。</p>
+<h5 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fmm</span><span class="params">(sentence,dic)</span>:</span></span><br><span class="line">    sentence = sentence.strip(<span class="string">"\n"</span>)</span><br><span class="line">    result = <span class="string">""</span></span><br><span class="line">    succ = <span class="number">0</span></span><br><span class="line">    maxlength = <span class="number">32</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> len(sentence) <span class="keyword">is</span> <span class="number">0</span>:</span><br><span class="line">        temp_s = sentence[:maxlength]</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> dic.__contains__(temp_s):</span><br><span class="line">            <span class="keyword">if</span> len(temp_s) &gt; <span class="number">1</span>:</span><br><span class="line">                temp_s = temp_s[:<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        result += temp_s+<span class="string">'/'</span></span><br><span class="line">        sentence = sentence[len(temp_s):]</span><br></pre></td></tr></table></figure>
+<h5 id="分词结果"><a href="#分词结果" class="headerlink" title="分词结果"></a>分词结果</h5><p>祝愿/祖国/明天/更加/繁荣昌盛/香港/大学生/在/京/度/佳节/新华社/北京/１月/１日/电/昨晚/，/第一/次/来到/首都/北京/的/５０/多/名/香港/大学生/，/和/北京航空航天大学/的/同学/们/在/《/歌唱/祖国/》/的/歌声/中/一起/迎接/１９９８年/的/到来/。/此次/到/京/的/香港/大学生/来自/香港科技大学/和/浸会大学/，/他们/于/１２月/３０日/抵京/后/参观/了/北大/、/清华/和/抗日战争纪念馆/。/在/中国青年政治学院/，/两地/大学生/就学/习/、/生活/等/共同/关心/的话/题/展开/了/交流/。/</p>
+<h4 id="BMM算法实现"><a href="#BMM算法实现" class="headerlink" title="BMM算法实现"></a>BMM算法实现</h4><h5 id="BMM简介"><a href="#BMM简介" class="headerlink" title="BMM简介"></a>BMM简介</h5><p>BMM即反向最大匹配分词，每次从句尾向前读取maxWordLength个字，如若匹配则继续，否则去掉最左侧单字继续匹配，直至单字无法匹配，将其单独分词。</p>
+<h5 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bmm</span><span class="params">(sentence,dic)</span>:</span></span><br><span class="line">    sentence = sentence.strip(<span class="string">"\n"</span>)</span><br><span class="line">    result = []</span><br><span class="line">    succ = <span class="number">0</span></span><br><span class="line">    maxlength = <span class="number">32</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> len(sentence) <span class="keyword">is</span> <span class="number">0</span>:</span><br><span class="line">        temp_s = sentence[len(sentence)-maxlength:]</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> dic.__contains__(temp_s):</span><br><span class="line">            <span class="keyword">if</span> len(temp_s) &gt; <span class="number">1</span>:</span><br><span class="line">                temp_s = temp_s[<span class="number">1</span>:]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        result.append(temp_s)</span><br><span class="line">        sentence = sentence[:len(sentence)-len(temp_s)]</span><br><span class="line">    res = <span class="string">""</span>.join(s+<span class="string">'/'</span> <span class="keyword">for</span> s <span class="keyword">in</span> reversed(result))</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h5 id="分词结果-1"><a href="#分词结果-1" class="headerlink" title="分词结果"></a>分词结果</h5><p>祝愿/祖国/明天/更加/繁荣昌盛/香港/大学生/在/京/度/佳节/新华社/北京/１月/１日/电/昨晚/，/第一/次/来到/首都/北京/的/５０/多/名/香港/大学生/，/和/北京航空航天大学/的/同学/们/在/《/歌唱/祖国/》/的/歌声/中/一起/迎接/１９９８年/的/到来/。/此次/到/京/的/香港/大学生/来自/香港科技大学/和/浸会大学/，/他们/于/１/２月/３０日/抵京/后/参观/了/北大/、/清华/和/抗日战争纪念馆/。/在/中国青年政治学院/，/两地/大学生/就/学习/、/生活/等/共同/关心/的/话题/展开/了/交流/。/</p>
+<h4 id="两种算法的分词结果比较"><a href="#两种算法的分词结果比较" class="headerlink" title="两种算法的分词结果比较"></a>两种算法的分词结果比较</h4><p>FMM与BMM分词结果不完全相同，比如例句：</p>
+<p>​    对于两地大学生就学习、生活等共同关心的话题展开了交流。</p>
+<p>FMM分词结果为：</p>
+<p>​    /两地/大学生/就学/习/、/生活/等/共同/关心/的话/题/展开/了/交流/。/</p>
+<p>BMM分词结果为：</p>
+<p>​    /两地/大学生/就/学习/、/生活/等/共同/关心/的/话题/展开/了/交流/。/</p>
+<p>从语义来说，BMM分词更为准确。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Unicode/" rel="tag"><i class="fa fa-tag"></i> Unicode</a>
+          
+            <a href="/tags/中文字符/" rel="tag"><i class="fa fa-tag"></i> 中文字符</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/24/位图文件的读取与显示/" rel="next" title="位图文件的读取与显示">
+                <i class="fa fa-chevron-left"></i> 位图文件的读取与显示
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">wbg</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#中文分词"><span class="nav-number">1.</span> <span class="nav-text">中文分词</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本要求"><span class="nav-number">1.1.</span> <span class="nav-text">基本要求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现"><span class="nav-number">1.2.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#补充：Unicode中文编码范围："><span class="nav-number">1.3.</span> <span class="nav-text">补充：Unicode中文编码范围：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FMM算法实现"><span class="nav-number">2.</span> <span class="nav-text">FMM算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#FMM简介"><span class="nav-number">2.1.</span> <span class="nav-text">FMM简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现-1"><span class="nav-number">2.2.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分词结果"><span class="nav-number">2.3.</span> <span class="nav-text">分词结果</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BMM算法实现"><span class="nav-number">3.</span> <span class="nav-text">BMM算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BMM简介"><span class="nav-number">3.1.</span> <span class="nav-text">BMM简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现-2"><span class="nav-number">3.2.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分词结果-1"><span class="nav-number">3.3.</span> <span class="nav-text">分词结果</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两种算法的分词结果比较"><span class="nav-number">4.</span> <span class="nav-text">两种算法的分词结果比较</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wbg</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">4.6k</span>
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
