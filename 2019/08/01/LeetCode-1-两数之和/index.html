@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="位图文件,C语言,">
+  <meta name="keywords" content="C语言,">
 
 
 
@@ -80,16 +80,16 @@
 
 
 <meta name="description" content="题目描述给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例:  给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]  题目链接">
-<meta name="keywords" content="位图文件,C语言">
+<meta name="keywords" content="C语言">
 <meta property="og:type" content="article">
-<meta property="og:title" content="位图文件的读取与显示">
+<meta property="og:title" content="LeetCode-1-两数之和">
 <meta property="og:url" content="http://yoursite.com/2019/08/01/LeetCode-1-两数之和/index.html">
 <meta property="og:site_name" content="Essays">
 <meta property="og:description" content="题目描述给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例:  给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]  题目链接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-01T10:21:22.942Z">
+<meta property="og:updated_time" content="2019-08-01T10:38:09.785Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="位图文件的读取与显示">
+<meta name="twitter:title" content="LeetCode-1-两数之和">
 <meta name="twitter:description" content="题目描述给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例:  给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]  题目链接">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>位图文件的读取与显示 | Essays</title>
+  <title>LeetCode-1-两数之和 | Essays</title>
   
 
 
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">位图文件的读取与显示</h1>
+          <h1 class="post-title" itemprop="name headline">LeetCode-1-两数之和</h1>
         
 
         <div class="post-meta">
@@ -383,7 +383,7 @@
 </blockquote>
 <p><a href="https://leetcode-cn.com/problems/two-sum" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
-<h4 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h4><h5 id="暴力求解"><a href="#暴力求解" class="headerlink" title="暴力求解"></a>暴力求解</h5><p>刚看到题目，第一反应就是暴力求解，即类似于选择排序的算法，从头开始利用每个值与其后的值逐个判断。这种方法思路简单，但时间复杂度高，为 O(n^2) </p>
+<h4 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h4><h5 id="暴力求解"><a href="#暴力求解" class="headerlink" title="暴力求解"></a>暴力求解</h5><p>刚看到题目，第一反应就是暴力求解，即类似于选择排序的算法，从头开始利用每个值与其后的值逐个判断。这种方法思路简单，但时间复杂度高，为 $ O(n^2)$ </p>
 <p>代码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>* <span class="title">twoSum</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> target, <span class="keyword">int</span>* returnSize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="keyword">int</span>* two_nums = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;numsSize<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j=i+<span class="number">1</span>;j&lt;numsSize;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]+nums[j] == target)&#123;</span><br><span class="line">                two_nums[<span class="number">0</span>] = i;</span><br><span class="line">                two_nums[<span class="number">1</span>] = j;</span><br><span class="line">                *returnSize = <span class="number">2</span>;</span><br><span class="line">                <span class="keyword">return</span> two_nums;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -402,8 +402,6 @@
     <footer class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/位图文件/" rel="tag"><i class="fa fa-tag"></i> 位图文件</a>
           
             <a href="/tags/C语言/" rel="tag"><i class="fa fa-tag"></i> C语言</a>
           
@@ -777,6 +775,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
