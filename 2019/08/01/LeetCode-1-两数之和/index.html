@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="题目描述给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例:  给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]  题目链接">
+<meta name="description" content="题目描述给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那两个整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例:  给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]  题目链接">
 <meta name="keywords" content="C语言">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode-1-两数之和">
 <meta property="og:url" content="http://yoursite.com/2019/08/01/LeetCode-1-两数之和/index.html">
 <meta property="og:site_name" content="Essays">
-<meta property="og:description" content="题目描述给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例:  给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]  题目链接">
+<meta property="og:description" content="题目描述给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那两个整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例:  给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]  题目链接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-01T11:32:19.189Z">
+<meta property="og:updated_time" content="2019-08-02T09:38:06.283Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode-1-两数之和">
-<meta name="twitter:description" content="题目描述给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例:  给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]  题目链接">
+<meta name="twitter:description" content="题目描述给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那两个整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例:  给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]  题目链接">
 
 
 
@@ -336,7 +336,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  582
+                  700
                 </span>
               
 
@@ -373,7 +373,7 @@
       
 
       
-        <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
+        <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个整数数组 <code>nums</code> 和一个目标值 <code>target</code>，请你在该数组中找出和为目标值的那<strong>两个</strong>整数，并返回他们的数组下标。</p>
 <p>你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。</p>
 <p>示例:</p>
 <blockquote>
@@ -386,12 +386,17 @@
 <h4 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h4><h5 id="初步解法"><a href="#初步解法" class="headerlink" title="初步解法"></a>初步解法</h5><p>刚看到题目，第一反应是暴力求解，即类似于选择排序的算法，从头开始利用每个值与其后的值逐个判断。这种方法思路简单，但时间复杂度高，为 $ O(n^2)$ </p>
 <p>代码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>* <span class="title">twoSum</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> target, <span class="keyword">int</span>* returnSize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="keyword">int</span>* two_nums = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;numsSize<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j=i+<span class="number">1</span>;j&lt;numsSize;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]+nums[j] == target)&#123;</span><br><span class="line">                two_nums[<span class="number">0</span>] = i;</span><br><span class="line">                two_nums[<span class="number">1</span>] = j;</span><br><span class="line">                *returnSize = <span class="number">2</span>;</span><br><span class="line">                <span class="keyword">return</span> two_nums;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="踩到的坑"><a href="#踩到的坑" class="headerlink" title="踩到的坑"></a>踩到的坑</h5><p>最开始以为<strong>returnSize</strong>是结果数组，所以用<code>malloc()</code>为它申请了内存空间，然后运行一直报错。然后根据字面意思和提交结果，猜测这个参数是一地址传递的参数，在主函数内控制输出个数。（因为之前输出结果一直为空）所以在找到结果时将其改写为2，另外申请一块内存存储结果。</p>
+<h5 id="踩到的坑"><a href="#踩到的坑" class="headerlink" title="踩到的坑"></a>踩到的坑</h5><p>最开始以为<code>returnSize</code>是结果数组，所以用<code>malloc()</code>为它申请了内存空间，然后运行一直报错。然后根据字面意思和提交结果，猜测这个参数是一地址传递的参数，在主函数内控制输出个数。（因为之前输出结果一直为空）所以在找到结果时将其改写为2，另外申请一块内存存储结果。</p>
 <h5 id="解法进阶"><a href="#解法进阶" class="headerlink" title="解法进阶"></a>解法进阶</h5><p>思路：用Hash表的形式存储数据，用空间复杂度换时间复杂度。</p>
 <p>引用LeetCode上的一个解的代码：</p>
 <p><a href="https://leetcode-cn.com/problems/two-sum/solution/cyu-yan-yi-bian-ha-xi-kong-jian-onhuan-shi-jian-on/" target="_blank" rel="noopener">代码链接</a></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">hash_node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> id;            <span class="comment">/* we'll use this field as the key */</span></span><br><span class="line">    <span class="keyword">int</span> index;</span><br><span class="line">    UT_hash_handle hh; <span class="comment">/* makes this structure hashable */</span></span><br><span class="line">&#125; hash_node;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span>* <span class="title">twoSum</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> target, <span class="keyword">int</span>* returnSize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> *two_nums = (<span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*<span class="number">2</span>);</span><br><span class="line">    hash_node *hash_table = <span class="literal">NULL</span>, *hash_item1 = <span class="literal">NULL</span>, *hash_item2 = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numsSize; i++) &#123;</span><br><span class="line">        <span class="comment">// 查找哈希表中是否存在满足和为target的另一个值,若存在直接返回</span></span><br><span class="line">        <span class="keyword">int</span> other_id = target - *(nums+i);</span><br><span class="line">        HASH_FIND_INT(hash_table, &amp;other_id, hash_item1);</span><br><span class="line">        <span class="keyword">if</span> (hash_item1) &#123;</span><br><span class="line">            two_nums[<span class="number">0</span>] = hash_item1-&gt;index;</span><br><span class="line">            two_nums[<span class="number">1</span>] = i;</span><br><span class="line">            *returnSize = <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">return</span> two_nums;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将本次遍历的值放入哈希表,value为数组下标,key为对应数值</span></span><br><span class="line">        hash_item2 = (hash_node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(hash_node));</span><br><span class="line">        hash_item2-&gt;id = *(nums+i);</span><br><span class="line">        hash_item2-&gt;index = i;</span><br><span class="line">        HASH_ADD_INT(hash_table, id, hash_item2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> two_nums;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其中<code>HASH_FIND_INT、HASH_ADD_INT</code>等函数是来自C语言的一个开源库 <a href="https://troydhanson.github.io/uthash/" target="_blank" rel="noopener"><code>uthash</code></a></p>
+<p>其中<code>HASH_FIND_INT()、HASH_ADD_INT()</code>等函数是来自C语言的一个开源库 <a href="https://troydhanson.github.io/uthash/" target="_blank" rel="noopener"><code>uthash</code></a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>这道题考察的内容不多，包括一些C语言中的指针的使用，<code>malloc()</code>函数的使用等。</li>
+<li>使用哈希表来存储并重复查找数据，可以大幅降低时间复杂度，但会增大空间复杂度。</li>
+<li>这是我第一次在C语言中使用哈希表，还需要使用外部库。如果是在Python中，可以利用字典这一数据结构，使用起来更方便。</li>
+</ul>
 
       
     </div>
@@ -431,6 +436,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/02/LeetCode-2-两数相加/" rel="prev" title="LeetCode-2-两数相加">
+                LeetCode-2-两数相加 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -507,7 +516,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -529,7 +538,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -562,7 +571,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#初步解法"><span class="nav-number">2.1.</span> <span class="nav-text">初步解法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#踩到的坑"><span class="nav-number">2.2.</span> <span class="nav-text">踩到的坑</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解法进阶"><span class="nav-number">2.3.</span> <span class="nav-text">解法进阶</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#初步解法"><span class="nav-number">2.1.</span> <span class="nav-text">初步解法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#踩到的坑"><span class="nav-number">2.2.</span> <span class="nav-text">踩到的坑</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解法进阶"><span class="nav-number">2.3.</span> <span class="nav-text">解法进阶</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
@@ -603,7 +612,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">5.3k</span>
+    <span title="Site words total count">6.5k</span>
   
 </div>
 
