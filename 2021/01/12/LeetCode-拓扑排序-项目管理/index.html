@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="拓扑排序,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="题目描述公司共有 n 个项目和  m 个小组，每个项目要不无人接手，要不就由 m 个小组之一负责。 group[i] 表示第 i 个项目所属的小组，如果这个项目目前无人接手，那么 group[i] 就等于 -1。（项目和小组都是从零开始编号的）小组可能存在没有接手任何项目的情况。 请你帮忙按要求安排这些项目的进度，并返回排序后的项目列表： 同一小组的项目，排序后在列表中彼此相邻。项目之间存在一定的">
+<meta name="keywords" content="拓扑排序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode-拓扑排序-项目管理">
+<meta property="og:url" content="http://yoursite.com/2021/01/12/LeetCode-拓扑排序-项目管理/index.html">
+<meta property="og:site_name" content="Essays">
+<meta property="og:description" content="题目描述公司共有 n 个项目和  m 个小组，每个项目要不无人接手，要不就由 m 个小组之一负责。 group[i] 表示第 i 个项目所属的小组，如果这个项目目前无人接手，那么 group[i] 就等于 -1。（项目和小组都是从零开始编号的）小组可能存在没有接手任何项目的情况。 请你帮忙按要求安排这些项目的进度，并返回排序后的项目列表： 同一小组的项目，排序后在列表中彼此相邻。项目之间存在一定的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2021/01/12/LeetCode-拓扑排序-项目管理/E:/blog/source/_posts/LeetCode-拓扑排序-项目管理/示例1.png">
+<meta property="og:updated_time" content="2021-01-13T11:04:39.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode-拓扑排序-项目管理">
+<meta name="twitter:description" content="题目描述公司共有 n 个项目和  m 个小组，每个项目要不无人接手，要不就由 m 个小组之一负责。 group[i] 表示第 i 个项目所属的小组，如果这个项目目前无人接手，那么 group[i] 就等于 -1。（项目和小组都是从零开始编号的）小组可能存在没有接手任何项目的情况。 请你帮忙按要求安排这些项目的进度，并返回排序后的项目列表： 同一小组的项目，排序后在列表中彼此相邻。项目之间存在一定的">
+<meta name="twitter:image" content="http://yoursite.com/2021/01/12/LeetCode-拓扑排序-项目管理/E:/blog/source/_posts/LeetCode-拓扑排序-项目管理/示例1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+ 
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入密码') !== ''){
+                alert('密码错误');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/01/12/LeetCode-拓扑排序-项目管理/">
+
+
+
+
+
+  <title>LeetCode-拓扑排序-项目管理 | Essays</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Essays</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/12/LeetCode-拓扑排序-项目管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wbg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Essays">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LeetCode-拓扑排序-项目管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-12T00:00:00+08:00">
+                2021-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>公司共有 n 个项目和  m 个小组，每个项目要不无人接手，要不就由 m 个小组之一负责。</p>
+<p>group[i] 表示第 i 个项目所属的小组，如果这个项目目前无人接手，那么 group[i] 就等于 -1。（项目和小组都是从零开始编号的）小组可能存在没有接手任何项目的情况。</p>
+<p>请你帮忙按要求安排这些项目的进度，并返回排序后的项目列表：</p>
+<p>同一小组的项目，排序后在列表中彼此相邻。<br>项目之间存在一定的依赖关系，我们用一个列表 beforeItems 来表示，其中 beforeItems[i] 表示在进行第 i 个项目前（位于第 i 个项目左侧）应该完成的所有项目。<br>如果存在多个解决方案，只需要返回其中任意一个即可。如果没有合适的解决方案，就请返回一个 空列表 。</p>
+<a id="more"></a>
+<p>示例 1：</p>
+<p><img src="/2021/01/12/LeetCode-拓扑排序-项目管理/E:/blog\source\_posts\LeetCode-拓扑排序-项目管理\示例1.png" alt="示例1"></p>
+<p>输入：n = 8, m = 2, group = [-1,-1,1,0,0,1,0,-1], beforeItems = [[],[6],[5],[6],[3,6],[],[],[]]<br>输出：[6,3,4,1,5,2,0,7]<br>示例 2：</p>
+<p>输入：n = 8, m = 2, group = [-1,-1,1,0,0,1,0,-1], beforeItems = [[],[6],[5],[6],[3],[],[4],[]]<br>输出：[]<br>解释：与示例 1 大致相同，但是在排序后的列表中，4 必须放在 6 的前面。</p>
+<p>提示：</p>
+<p>1 &lt;= m &lt;= n &lt;= 3 * 104<br>group.length == beforeItems.length == n<br>-1 &lt;= group[i] &lt;= m - 1<br>0 &lt;= beforeItems[i].length &lt;= n - 1<br>0 &lt;= beforeItems[i][j] &lt;= n - 1<br>i != beforeItems[i][j]<br>beforeItems[i] 不含重复元素</p>
+<p><a href="https://leetcode-cn.com/problems/sort-items-by-groups-respecting-dependencies" target="_blank" rel="noopener">题目链接</a></p>
+<h4 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h4><h5 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h5><p>在图论中，<strong>拓扑排序（Topological Sorting</strong>）是一个有向无环图（DAG, Directed Acyclic Graph）的所有顶点的线性序列。且该序列必须满足下面两个条件：</p>
+<ol>
+<li>每个顶点出现且只出现一次。</li>
+<li>若存在一条从顶点 A 到顶点 B 的路径，那么在序列中顶点 A 出现在顶点 B 的前面。</li>
+</ol>
+<p>有向无环图（DAG）才有拓扑排序，非DAG图没有拓扑排序一说。</p>
+<p>如何写出拓扑排序呢？比较常用的方法：</p>
+<ol>
+<li>从 DAG 图中选择一个 没有前驱（即入度为0）的顶点并输出。</li>
+<li>从图中删除该顶点和所有以它为起点的有向边。</li>
+<li>重复 1 和 2 直到当前的 DAG 图为空或当前图中不存在无前驱的顶点为止。后一种情况说明有向图中必然存在环。</li>
+</ol>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用字典结构表示图的邻接表，key为点，value为邻接点的集合</span></span><br><span class="line">Graph = &#123;A:[B,C],</span><br><span class="line">         B:[D],</span><br><span class="line">         C:[],</span><br><span class="line">         D:[]</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">#假设入度表也用字典结构表示</span></span><br><span class="line">inDegree = &#123;A:<span class="number">0</span>,</span><br><span class="line">           B:<span class="number">1</span>,</span><br><span class="line">           C:<span class="number">1</span>,</span><br><span class="line">           D:<span class="number">1</span></span><br><span class="line">          &#125;</span><br><span class="line"><span class="comment">#随手写的拓扑排序</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">topSort</span><span class="params">(graph, inDegree)</span>:</span></span><br><span class="line">    q = queue.Queue()</span><br><span class="line">    n = len(graph)<span class="comment">#计数标志位</span></span><br><span class="line">    result = []</span><br><span class="line">    <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">        find = <span class="number">0</span><span class="comment">#遍历结果标志位</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(graph)):</span><br><span class="line">            <span class="keyword">if</span> inDegree[i] == <span class="number">0</span>:</span><br><span class="line">                q.put(i)</span><br><span class="line">                inDegree[i] = <span class="number">-1</span><span class="comment">#入度置-1，表示移除</span></span><br><span class="line">                <span class="comment">#邻接点入度减1</span></span><br><span class="line">                <span class="keyword">for</span> point <span class="keyword">in</span> graph[i]:</span><br><span class="line">                    inDegree[point] -= <span class="number">1</span></span><br><span class="line">                n -= <span class="number">1</span></span><br><span class="line">                find = <span class="number">1</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">   		<span class="comment">#没有入度为0的点，表示存在环，无拓扑排序</span></span><br><span class="line">        <span class="keyword">if</span> find == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">	<span class="keyword">while</span> <span class="keyword">not</span> q.empty():</span><br><span class="line">       	result.append(q.get())</span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><h5 id="描述-1"><a href="#描述-1" class="headerlink" title="描述"></a>描述</h5><p>回到题目上来，👴刚学会拓扑排序，这个题直接拿拓扑排序的嵌套砸脸上，👴跪了。</p>
+<p>题目描述弯弯绕绕，阅读理解做了半天。</p>
+<p>首先题目内容分成两块，一块是小组，一块是项目。</p>
+<p>每个项目由一个小组负责。</p>
+<p>有些项目具有前置项目，前置项目做完才能进行。</p>
+<p>这两句话的隐含内容，可以理解为，<strong>若某小组负责的某项目，其前置项目为另外一小组负责，则另外一小组为本小组的前置小组</strong>。</p>
+<p>由此，我们得出思路：</p>
+<p><strong>对小组间进行拓扑排序，若存在序列，则对小组负责的项目进行拓扑排序，最后按序插入即可。</strong></p>
+<p>首要问题就是建立起小组间的依赖图。遍历group期间，发现无人负责的项目小组编号全为-1，其实是不存在的小组，但是会建立不存在的依赖关系。为了方便起见，先对无人负责项目进行重分配。因为只有m个小组，最大编号为m-1，所以对无人负责的小组从m开始，依次编号（是谁负责无所谓，只是为了方便区分）。</p>
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="comment">#若某小组负责的某项目，其前置项目为另外一小组负责，则另外一小组为本小组的前置小组</span></span><br><span class="line">    <span class="comment">#建立小组间关系图，存在拓扑排序则对本小组负责的项目进行拓扑排序</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sortItems</span><span class="params">(self, n, m, group, beforeItems)</span> :</span></span><br><span class="line">        <span class="comment">#对无小组负责（即编号都为-1）的项目进行重编号，方便处理</span></span><br><span class="line">        tempGroup = m</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">            <span class="keyword">if</span> group[i] == <span class="number">-1</span>:</span><br><span class="line">                group[i] = tempGroup</span><br><span class="line">                tempGroup += <span class="number">1</span></span><br><span class="line">        <span class="comment">#建立小组和项目的图以及入度表</span></span><br><span class="line">        programIndgree = collections.defaultdict(int)</span><br><span class="line">        groupIndgree = collections.defaultdict(int)</span><br><span class="line">        programGraph = collections.defaultdict(list)</span><br><span class="line">        groupGraph = collections.defaultdict(list)</span><br><span class="line">        <span class="comment">#初始化</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">            programGraph[i] = []</span><br><span class="line">            programIndgree[i] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,tempGroup):</span><br><span class="line">            groupGraph[i] = []</span><br><span class="line">            groupIndgree[i] = <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">            <span class="keyword">for</span> pre <span class="keyword">in</span> beforeItems[i]:</span><br><span class="line">                <span class="comment">#i = 4  pre = 3 3-&gt;4</span></span><br><span class="line">                programGraph[pre].append(i)</span><br><span class="line">                programIndgree[i] += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> group[pre] != group[i]:</span><br><span class="line">                    groupGraph[group[pre]].append(group[i])</span><br><span class="line">                    groupIndgree[group[i]] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#建立组内项目索引，方便后续对program排序</span></span><br><span class="line">        groupProgram = collections.defaultdict(list)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">            groupProgram[group[i]].append(i)</span><br><span class="line">        <span class="comment">#group topSort</span></span><br><span class="line">        gpoint = groupGraph.keys()</span><br><span class="line">        groupQ = self.topSort(groupIndgree, groupGraph, gpoint)</span><br><span class="line">        <span class="keyword">if</span> groupQ == []:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        <span class="comment">#program topSort</span></span><br><span class="line">        result = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> groupQ:</span><br><span class="line">            points = groupProgram[i]</span><br><span class="line">            <span class="keyword">if</span> points == []:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            tempresult = self.topSort(programIndgree, programGraph, points)</span><br><span class="line">            <span class="keyword">if</span> tempresult == []:</span><br><span class="line">                <span class="keyword">return</span> []</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                result += tempresult</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="comment">#为了能复用，做了改动，添加points参数表名对哪些点进行sort。</span></span><br><span class="line">    <span class="comment">#对group排序的时候无影响，points包含所有group</span></span><br><span class="line">    <span class="comment">#对program排序的时候，points只包含该group所负责的内容</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">topSort</span><span class="params">(self, indgree, graph, points)</span>:</span></span><br><span class="line">        n = len(points)</span><br><span class="line">        q = queue.Queue()</span><br><span class="line">        <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">            find = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> point <span class="keyword">in</span> points:</span><br><span class="line">                <span class="keyword">if</span> indgree[point] == <span class="number">0</span>:</span><br><span class="line">                    find = <span class="number">1</span></span><br><span class="line">                    q.put(point)</span><br><span class="line">                    n -= <span class="number">1</span></span><br><span class="line">                    indgree[point] = <span class="number">-1</span></span><br><span class="line">                    <span class="keyword">for</span> j <span class="keyword">in</span> graph[point]:</span><br><span class="line">                        indgree[j] -= <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> find == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> []</span><br><span class="line">        result =[]</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> q.empty():</span><br><span class="line">            result.append(q.get())</span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<p>然而，在验证最后一个样例的时候超时了。orz</p>
+<p>虽然但是，👴不想改了，也不知道怎么改。很遗憾的，官方题解没给Python代码。</p>
+<p>就这样吧，姑且当做它过了，👴真的累了。以后有空回来看再改，希望那时候👴一眼就能看出来哪里能优化。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/拓扑排序/" rel="tag"><i class="fa fa-tag"></i> 拓扑排序</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/11/LeetCode-并查集-交换字符串中的元素/" rel="next" title="LeetCode-并查集-交换字符串中的元素">
+                <i class="fa fa-chevron-left"></i> LeetCode-并查集-交换字符串中的元素
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">wbg</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拓扑排序"><span class="nav-number">2.</span> <span class="nav-text">拓扑排序</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#描述"><span class="nav-number">2.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现"><span class="nav-number">2.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路"><span class="nav-number">3.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#描述-1"><span class="nav-number">3.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码"><span class="nav-number">3.2.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wbg</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">11.6k</span>
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
