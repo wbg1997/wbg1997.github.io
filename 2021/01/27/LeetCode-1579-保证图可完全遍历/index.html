@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="LeetCode,并查集,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="题目描述Alice 和 Bob 共有一个无向图，其中包含 n 个节点和 3  种类型的边： 类型 1：只能由 Alice 遍历。类型 2：只能由 Bob 遍历。类型 3：Alice 和 Bob 都可以遍历。给你一个数组 edges ，其中 edges[i] = [typei, ui, vi] 表示节点 ui 和 vi 之间存在类型为 typei 的双向边。请你在保证图仍能够被 Alice和 Bob">
+<meta name="keywords" content="LeetCode,并查集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode-1579-保证图可完全遍历">
+<meta property="og:url" content="http://yoursite.com/2021/01/27/LeetCode-1579-保证图可完全遍历/index.html">
+<meta property="og:site_name" content="Essays">
+<meta property="og:description" content="题目描述Alice 和 Bob 共有一个无向图，其中包含 n 个节点和 3  种类型的边： 类型 1：只能由 Alice 遍历。类型 2：只能由 Bob 遍历。类型 3：Alice 和 Bob 都可以遍历。给你一个数组 edges ，其中 edges[i] = [typei, ui, vi] 表示节点 ui 和 vi 之间存在类型为 typei 的双向边。请你在保证图仍能够被 Alice和 Bob">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2021/01/27/LeetCode-1579-保证图可完全遍历/1.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/27/LeetCode-1579-保证图可完全遍历/2.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/27/LeetCode-1579-保证图可完全遍历/3.png">
+<meta property="og:updated_time" content="2021-01-27T14:09:49.425Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode-1579-保证图可完全遍历">
+<meta name="twitter:description" content="题目描述Alice 和 Bob 共有一个无向图，其中包含 n 个节点和 3  种类型的边： 类型 1：只能由 Alice 遍历。类型 2：只能由 Bob 遍历。类型 3：Alice 和 Bob 都可以遍历。给你一个数组 edges ，其中 edges[i] = [typei, ui, vi] 表示节点 ui 和 vi 之间存在类型为 typei 的双向边。请你在保证图仍能够被 Alice和 Bob">
+<meta name="twitter:image" content="http://yoursite.com/2021/01/27/LeetCode-1579-保证图可完全遍历/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+ 
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入密码') !== ''){
+                alert('密码错误');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/01/27/LeetCode-1579-保证图可完全遍历/">
+
+
+
+
+
+  <title>LeetCode-1579-保证图可完全遍历 | Essays</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Essays</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/27/LeetCode-1579-保证图可完全遍历/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wbg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Essays">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LeetCode-1579-保证图可完全遍历</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-27T20:57:36+08:00">
+                2021-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>Alice 和 Bob 共有一个无向图，其中包含 n 个节点和 3  种类型的边：</p>
+<p>类型 1：只能由 Alice 遍历。<br>类型 2：只能由 Bob 遍历。<br>类型 3：Alice 和 Bob 都可以遍历。<br>给你一个数组 edges ，其中 edges[i] = [typei, ui, vi] 表示节点 ui 和 vi 之间存在类型为 typei 的双向边。请你在保证图仍能够被 Alice和 Bob 完全遍历的前提下，找出可以删除的最大边数。如果从任何节点开始，Alice 和 Bob 都可以到达所有其他节点，则认为图是可以完全遍历的。</p>
+<p>返回可以删除的最大边数，如果 Alice 和 Bob 无法完全遍历图，则返回 -1 。</p>
+<a id="more"></a>
+<p>示例 1：</p>
+<p><img src="/2021/01/27/LeetCode-1579-保证图可完全遍历/1.png" alt="1"></p>
+<p>输入：n = 4, edges = [[3,1,2],[3,2,3],[1,1,3],[1,2,4],[1,1,2],[2,3,4]]<br>输出：2<br>解释：如果删除 [1,1,2] 和 [1,1,3] 这两条边，Alice 和 Bob 仍然可以完全遍历这个图。再删除任何其他的边都无法保证图可以完全遍历。所以可以删除的最大边数是 2 。<br>示例 2：</p>
+<p><img src="/2021/01/27/LeetCode-1579-保证图可完全遍历/2.png" alt="2"></p>
+<p>输入：n = 4, edges = [[3,1,2],[3,2,3],[1,1,4],[2,1,4]]<br>输出：0<br>解释：注意，删除任何一条边都会使 Alice 和 Bob 无法完全遍历这个图。<br>示例 3：</p>
+<p><img src="/2021/01/27/LeetCode-1579-保证图可完全遍历/3.png" alt="3"></p>
+<p>输入：n = 4, edges = [[3,2,3],[1,1,2],[2,3,4]]<br>输出：-1<br>解释：在当前图中，Alice 无法从其他节点到达节点 4 。类似地，Bob 也不能达到节点 1 。因此，图无法完全遍历。</p>
+<p>提示：</p>
+<p>1 &lt;= n &lt;= 10^5<br>1 &lt;= edges.length &lt;= min(10^5, 3 <em> n </em> (n-1) / 2)<br>edges[i].length == 3<br>1 &lt;= edges[i][0] &lt;= 3<br>1 &lt;= edges[i][1] &lt; edges[i][2] &lt;= n<br>所有元组 (typei, ui, vi) 互不相同</p>
+<p><a href="https://leetcode-cn.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable" target="_blank" rel="noopener">题目链接</a></p>
+<h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><h5 id="思路理顺"><a href="#思路理顺" class="headerlink" title="思路理顺"></a>思路理顺</h5><p>读完题目很明显第一反应，找连通分量，而且还是分别找。分别对Alice和Bob寻找连通分量，看两人是否都能连接所有点。那么第一思路就是：<strong>并查集</strong>。并且是两个并查集，分别维护。</p>
+<p>题目里的边分为三种，公共边、Alice独占边（简称A边）和Bob独占边（简称B边）。</p>
+<p>题目要求删去最多的边，那么很明显，对于两人来说，任意两个节点之间使用公共边可以节约两条独占边（如果存在的话），而使用独占边则最少要两条。</p>
+<p>因此，<strong>公共边的优先级是最高的</strong>。</p>
+<p>我们遍历每一条公共边，对于其连接的的两个节点：</p>
+<p>如果这两个节点在同一个连通分量中，那么这条边是可以去掉的。</p>
+<p>如果这两个节点不在同一个连通分量中，我们就可以（并且一定）添加这条公共边，然后归并这两个节点所在的连通分量。</p>
+<p>至此，我们完成了对公共边的添加，此时的图对于Alice和Bob来说是一样的，因为不存在任何独占边。</p>
+<p>然后我们对A边和B边进行添加，因为两种边并不互通，所以当Alice不需要某A边时，该A边可以直接去掉，B边同理。</p>
+<p>最后，完成所有归并以后，我们还需要满足Alice和Bob都可以完全遍历的条件，因此检查两个并查集最后是否都仅剩一个连通分量。</p>
+<p>最后按题目要求给出结果即可。</p>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxNumEdgesToRemove</span><span class="params">(self, n, edges)</span> :</span></span><br><span class="line">        f_a = []</span><br><span class="line">        f_b = []</span><br><span class="line">        <span class="comment">#记录连通分支数，不为1时不连通 return -1</span></span><br><span class="line">        set_counta = n</span><br><span class="line">        set_countb = n</span><br><span class="line">        ans = []</span><br><span class="line">        <span class="comment">#魔改并查集三板斧，加了type参数区分AB边</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">(n)</span>:</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):</span><br><span class="line">                f_a.append(i)</span><br><span class="line">                f_b.append(i)</span><br><span class="line">            ans = []</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">find</span><span class="params">(x,tp)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> tp == <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">if</span> x != f_a[x]:</span><br><span class="line">                    f_a[x] = find(f_a[x],<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">return</span> f_a[x]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> x != f_b[x]:</span><br><span class="line">                    f_b[x] = find(f_b[x],<span class="number">2</span>)</span><br><span class="line">                <span class="keyword">return</span> f_b[x]</span><br><span class="line">        <span class="comment">#归并函数添加bool返回值，利于判断某边的需求or舍弃情况</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">merge</span><span class="params">(x,y,tp)</span>:</span></span><br><span class="line">            <span class="keyword">nonlocal</span> set_counta</span><br><span class="line">            <span class="keyword">nonlocal</span> set_countb</span><br><span class="line">            <span class="keyword">if</span> tp == <span class="number">1</span>:</span><br><span class="line">                fx = find(x,<span class="number">1</span>)</span><br><span class="line">                fy = find(y,<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">if</span> fx != fy:</span><br><span class="line">                    f_a[fx] = fy</span><br><span class="line">                    set_counta -= <span class="number">1</span></span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            <span class="keyword">if</span> tp == <span class="number">2</span>:</span><br><span class="line">                fx = find(x,<span class="number">2</span>)</span><br><span class="line">                fy = find(y,<span class="number">2</span>)</span><br><span class="line">                <span class="keyword">if</span> fx != fy:</span><br><span class="line">                    f_b[fx] = fy</span><br><span class="line">                    set_countb -= <span class="number">1</span></span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        </span><br><span class="line">        init(n)</span><br><span class="line">        <span class="comment">#对边排序 优先遍历公共边</span></span><br><span class="line">        edges.sort(reverse = <span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">for</span> tp,x,y <span class="keyword">in</span> edges:</span><br><span class="line">            <span class="comment">#添加公共边</span></span><br><span class="line">            <span class="keyword">if</span> tp == <span class="number">3</span>:</span><br><span class="line">                a = merge(x,y,<span class="number">1</span>)</span><br><span class="line">                b = merge(x,y,<span class="number">2</span>)</span><br><span class="line">                <span class="comment">#两人都不需要该公共边时，可删除</span></span><br><span class="line">                <span class="comment">#此处稍显多余，一人不需要则另外一人也不需要</span></span><br><span class="line">                <span class="comment">#不过这样便于理解，两人都不需要的公共边就抛弃</span></span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> (a <span class="keyword">or</span> b):</span><br><span class="line">                    ans.append([tp,x,y])</span><br><span class="line">            <span class="comment">#添加其余边</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> merge(x,y,tp):</span><br><span class="line">                    ans.append([tp,x,y])</span><br><span class="line">        <span class="comment">#判断是否满足两人都完全遍历</span></span><br><span class="line">        <span class="keyword">if</span> set_counta != <span class="number">1</span> <span class="keyword">or</span> set_countb != <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        <span class="keyword">return</span> len(ans)</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>刚拿到题目一看，Hard难度，怕是又要做一晚上。结果看完以后还是熟悉的并查集，稍微安心（看来近一个月的并查集没白做，妈妈我学会并查集啦）。</p>
+<p>读完题目以后，思路差不多就有了，有些细节没太理顺好，边code边想，一点点敲出来。一开始想的是，分别维护ans_a和ans_b，然后两者取包含的公共边的交集，以及独占边。后来写着写着发现没有必要，完全把自己绕进去了。到这儿顺便提一嘴，在写两个集合合并时，想到了这个东西：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ret = [i <span class="keyword">for</span> i <span class="keyword">in</span> edge_a <span class="keyword">if</span> i <span class="keyword">in</span> edge_b]</span><br></pre></td></tr></table></figure>
+<p>以前用过，后来忘了，写短循环的时候真好用，简洁好看。附一个学习链接：<a href="https://blog.teamtreehouse.com/python-single-line-loops" target="_blank" rel="noopener">Python Single Line For Loops</a></p>
+<p>然后在计数集合数时（即判断是否最后都合并为一个集合），首先用的对于每个结点都去寻根，看是否属于同一集合。后来想到，一开始有几个结点就是几个集合，合并一次少一个，在合并时计数就好了。修改后代码短了一些，不过运行时间并没有什么变化…orz</p>
+<p>对了，第一次写完交的时候，发现预期答案是-1，我的答案是0，才看到还有两人都完全遍历的条件这一说…还是得好好审题。</p>
+<p>后话：</p>
+<p>今天爷爷去世了。</p>
+<p>虽然我明明在家，可是因为各种原因，我没能去看他最后一眼。说不难过是假的，还是有点遗憾吧。记得以前自己说过，最遗憾的是，我本可以。现在又是这样，可是这次没有弥补的机会了啊。</p>
+<p>今天把签名改了，原来是很喜欢的一句傅雷家书里的话，“本质的善良，天性的温厚，以及开阔的胸襟。”现在还是用来提醒自己别留遗憾吧。身体不好的爷爷走了，但是还有一个身体也不太好的姥姥还在，是时候去看看她了。万一….谁知道明天和意外哪个先来呢。前几天妈妈去看望姥姥，回来的时候说，重度阿尔茨海默症的姥姥连吃饭都忘记了，那天却突然叫了她的名字。说这些的时候妈妈开心的像个小朋友，哈哈哈真好，姥姥就是妈妈的妈妈呀。以前妈妈说，姥姥身体不好了，可能很难熬过这个冬天，以后就没有娘家了呀。虽然她说的很轻淡，我还是感觉到她有点难过。木讷笨拙的我也不知道该说些什么，只能在一边笑着悄悄说，没关系，还有我呢。现在爷爷真的没有熬过这个冬天，爸爸再也没有爸爸了。</p>
+<p>最近通过一些事情，真的看清了好多东西。我不能想象，也不能理解，怎么会有人面对重病的至亲，张嘴闭嘴只有钱呢。怎么一提到钱，人啊，就不像个人样了呢。说实话，多少钱呢，没多少钱。一个孤苦老人能有多少钱。说句不好听的，不够我辞职前几个月的工资多。为了这点钱，却能说出类似“不给钱，别想让我管老人家”这种胡搅蛮缠的话。真的好过分。但是我有点骂不出来，也不知道怎么骂。可能这些事轮不到我这个家里最小的小辈来管吧。我也不想管不想掺和。也就只能在自己的小天地里写一写了，还好，爸爸不是这样的人。</p>
+<p>今年过年回家没有想见的人了，也不用回家了。</p>
+<p>我也不知道自己在写些什么，乱七八糟的，写给自己看。希望以后翻出来的时候，还能记得现在这些事情，记得现在的想法，没有变成惹人讨厌的人吧。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LeetCode/" rel="tag"><i class="fa fa-tag"></i> LeetCode</a>
+          
+            <a href="/tags/并查集/" rel="tag"><i class="fa fa-tag"></i> 并查集</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/25/LeetCode-959-由斜杠划分区域/" rel="next" title="LeetCode-959-由斜杠划分区域">
+                <i class="fa fa-chevron-left"></i> LeetCode-959-由斜杠划分区域
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">wbg</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#思路理顺"><span class="nav-number">2.1.</span> <span class="nav-text">思路理顺</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现"><span class="nav-number">2.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wbg</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">15.6k</span>
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
